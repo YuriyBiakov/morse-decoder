@@ -37,8 +37,35 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
+const MORSE_SYMBOLS = {
+    '10':  '.',
+    '11':  '-',
+    '00':  ''
+}
+
 function decode(expr) {
-    // write your solution here
+    const exprLength = expr.length;
+    const amountOfSym = exprLength / 10;
+    let result = '';
+
+    for (let i = 0; i < amountOfSym; i ++){
+        if (expr[i * 10] === '*'){
+            result += ' ';
+        } else 
+        {
+            let humanSymbol = '';
+            let morseLetter = '';
+            for (let y = 0; y < 10; y += 2){
+                const index = i * 10 + y;
+                const morseNumberSymbol = expr[index] + expr[index + 1];
+                let morseSymbol = MORSE_SYMBOLS[morseNumberSymbol];
+                morseLetter += morseSymbol;
+            }
+            humanSymbol = MORSE_TABLE[morseLetter];
+            result += humanSymbol;
+        }
+    }
+    return result;
 }
 
 module.exports = {
